@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.new-note-form input,
+.new-note-form textarea,
+.new-note-form select {
+    display: block;
+    margin: 1rem 0;
+    border-radius: 8px;
+    padding: 8px;
+    color: black;
+    width: 100%;
+    background-color: rgba(245, 255, 252, 0.479);
+}
+
+.raport-form{
+    display:flex;
+    gap:1rem;
+}
+
+.raport-form select {
+    display: block;
+    margin: 1rem 0;
+    border-radius: 8px;
+    padding: 8px;
+    color: black;
+    flex:1;
+    background-color: rgba(245, 255, 252, 0.479);
+}
+
+@layer components {
+    .table-header-active {
+        @apply w-[20%] text-gray-400 uppercase font-semibold text-xs md:text-sm cursor-pointer hover:text-green-600;
+    }
+
+    .btn-standard {
+        @apply py-2 px-4 bg-slate-500 rounded-md text-white text-xs md:text-sm hover:bg-slate-800 duration-300;
+    }
+
+    .main-menu-item {
+        @apply text-sm xl:text-base py-1 px-2 mb-4 md:mb-0 rounded-md cursor-pointer  bg-teal-400 md:bg-transparent hover:bg-teal-400 hover:text-white uppercase;
+    }
+
+    h1 {
+        @apply text-2xl xl:text-6xl py-8 font-semibold text-slate-800;
+    }
+}
+.scrollable-container {
+    width: 100%;
+    min-width: 600px;
+    white-space: nowrap; /* Prevent content from wrapping */
+    overflow-x: auto;
+  }

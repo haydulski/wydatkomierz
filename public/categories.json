@@ -1,0 +1,46 @@
+[
+    {
+        "name": "Jedzenie",
+        "description": "Wydatki związane z zakupem żywności i posiłkami."
+    },
+    {
+        "name": "Rachunki",
+        "description": "Opłaty związane z wynajmem lub własnością mieszkania, np. czynsz, rachunki za media."
+    },
+    {
+        "name": "Wakacje",
+        "description": "Koszty związane z podróżami i wakacjami."
+    },
+    {
+        "name": "Rozrywka",
+        "description": "Wydatki na rozrywkę, np. bilety do kina, koncerty, czy abonamenty do serwisów streamingowych."
+    },
+    {
+        "name": "Leki",
+        "description": "Wydatki związane z opieką zdrowotną i lekami."
+    },
+    {
+        "name": "Ubrania",
+        "description": "Wydatki na odzież i obuwie."
+    },
+    {
+        "name": "Edukacja",
+        "description": "Koszty związane z nauką, np. opłaty za szkołę, kursy, czy podręczniki."
+    },
+    {
+        "name": "Higiena",
+        "description": "Wydatki na produkty higieniczne, kosmetyki, itp."
+    },
+    {
+        "name": "Technologia",
+        "description": "Zakupy związane z elektroniką, sprzętem komputerowym, czy usługami internetowymi."
+    },
+    {
+        "name": "Inne",
+        "description": "Inne wydatki, które nie mieszczą się w żadnej z powyższych kategorii."
+    },
+    {
+        "name": "Duperele",
+        "description": "Gadżety, świeczki i inne czasoumilacze."
+    }
+]
