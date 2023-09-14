@@ -43,7 +43,7 @@ class UserNotes extends Component
         $this->previousYear = $this->dateTo->subYear()->format('Y');
 
         $this->expenses = Cache::remember(
-            "$this->currentYear-expenses",
+            "$this->currentYear-expenses-" . $user->id,
             3600,
             fn () => $this->getFormatedExpenses($this->dateFrom, $this->dateTo)
         );
