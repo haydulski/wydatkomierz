@@ -14,18 +14,12 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class Download extends Component
 {
-
     #[Locked]
     public User $user;
-
     public string $year;
-
     public int $month = 1;
-
     public array $months;
-
     public string $annualRaportYear;
-
     public int $raportType;
 
     public array $raportTypes = [
@@ -34,9 +28,9 @@ class Download extends Component
         3 => 'Wszystkie lata'
     ];
 
-    public function mount(User $user): void
+    public function mount(): void
     {
-        $this->user = $user;
+        $this->user = auth()->user();
         $this->year = Carbon::now()->format('Y');
         $this->annualRaportYear = Carbon::now()->format('Y');
         $this->months = range(1, 12, 1);

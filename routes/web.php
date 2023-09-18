@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Middleware\GlobalLoginCheck;
 use App\Livewire\Charts;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\CreateNote;
@@ -22,11 +21,12 @@ use App\Livewire\UserNotes;
 */
 
 Route::get('/login', Login::class)->name('login');
-Route::middleware(GlobalLoginCheck::class)->group(function () {
+
+Route::middleware('auth')->group(function () {
     Route::get('/', Home::class)->name('home');
-    Route::get('/lista/{user}', UserNotes::class)->name('user.notes');
-    Route::get('/dodaj-wydatek/{user}', CreateNote::class)->name('user.notes.new');
-    Route::get('/edytuj-wydatek/{expense}/{user}', EditNote::class)->name('user.notes.edit');
-    Route::get('/statystyki/{user}', Charts::class)->name('user.charts');
-    Route::get('/raporty/{user}', Download::class)->name('user.download');
+    Route::get('/lista', UserNotes::class)->name('user.notes');
+    Route::get('/dodaj-wydatek', CreateNote::class)->name('user.notes.new');
+    Route::get('/edytuj-wydatek/{expense}', EditNote::class)->name('user.notes.edit');
+    Route::get('/statystyki', Charts::class)->name('user.charts');
+    Route::get('/raporty', Download::class)->name('user.download');
 });

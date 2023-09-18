@@ -12,12 +12,12 @@ class Login extends Component
 
     public function login()
     {
-        if (config('app.user') === $this->user && config('app.password') === $this->password) {
-            session()->put('current-user', $this->user);
+        $creds = ['email' => $this->user, 'password' => $this->password];
+        if (auth()->attempt($creds)) {
             return $this->redirectRoute('home');
-        } else {
-            return redirect()->route('login')->with('error', 'Błędne hasło lub login');
         }
+
+        return redirect()->route('login')->with('error', 'Błędne hasło lub login');
     }
 
     public function render()

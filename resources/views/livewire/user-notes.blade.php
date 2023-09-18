@@ -46,11 +46,11 @@
                                     <div class="w-[20%] block md:flex gap-2">
                                         <a class="px-2 py-2 xl:py-0 bg-green-600 hover:bg-green-700 rounded-md text-slate-100 block
                                         duration-200"
-                                            href="{{ route('user.notes.edit', [$note->id, $user->id]) }}">Edytuj</a>
+                                            href="{{ route('user.notes.edit', [$note->id]) }}">Edytuj</a>
                                         <p class="px-2 py-2 xl:py-0 bg-red-600 hover:bg-red-700 text-slate-100 rounded-md mt-2
                                          md:mt-0 cursor-pointer duration-200"
                                             wire:confirm="Na pewno chcesz usunąć?"
-                                            wire:click="delete({{ $note->id }},{{ $user->id }},{{ $currentYear }})">
+                                            wire:click="delete({{ $note->id }},{{ $currentYear }})">
                                             Usuń
                                         </p>
                                     </div>

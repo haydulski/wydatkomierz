@@ -35,10 +35,10 @@ class CreateNote extends Component
     #[Locked]
     public int $user_id;
 
-    public function mount(User $user): void
+    public function mount(): void
     {
-        $this->user = $user;
-        $this->user_id = $user->id;
+        $this->user = auth()->user();
+        $this->user_id = $this->user->id;
         $this->categories = Category::all();
     }
 
@@ -48,10 +48,9 @@ class CreateNote extends Component
         $this->user->expenses()->create(
             $this->only(['title', 'spent_at', 'amount', 'info', 'category_id'])
         );
-
         Cache::flush();
 
-        return $this->redirect("/lista/$this->user_id");
+        return $this->redirectRoute('user.notes');
     }
 
     public function render(): View

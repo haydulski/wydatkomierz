@@ -12,24 +12,18 @@ use Livewire\Component;
 
 class UserNotes extends Component
 {
-
     private const DB_DATE_FORMAT = 'Y-m-d H:i:s';
-
     private CarbonImmutable $dateFrom;
-
     private CarbonImmutable $dateTo;
 
     public User $user;
-
     public $expenses;
-
     public string $currentYear;
-
     public string $previousYear;
 
-    public function mount(User $user, ?string $year = null)
+    public function mount(?string $year = null)
     {
-        $this->user = $user;
+        $this->user = auth()->user();
 
         if ($year === null || $year === CarbonImmutable::now()->format('Y')) {
             $this->dateFrom = CarbonImmutable::now()->startOfYear();
@@ -43,7 +37,7 @@ class UserNotes extends Component
         $this->previousYear = $this->dateTo->subYear()->format('Y');
 
         $this->expenses = Cache::remember(
-            "$this->currentYear-expenses-" . $user->id,
+            "$this->currentYear-expenses-" . $this->user->id,
             3600,
             fn () => $this->getFormatedExpenses($this->dateFrom, $this->dateTo)
         );
@@ -52,9 +46,9 @@ class UserNotes extends Component
     public function prevYear(string $year): void
     {
         if ($year !== 'now') {
-            $this->mount($this->user, $year);
+            $this->mount($year);
         } else {
-            $this->mount($this->user, null);
+            $this->mount(null);
         }
     }
 
@@ -68,14 +62,13 @@ class UserNotes extends Component
         $this->expenses = $sortedArray;
     }
 
-    public function delete(int $id, int $userId, string $year)
+    public function delete(int $id, string $year)
     {
-        $user = User::find($userId);
         $note = Expense::find($id);
         $note->delete();
         Cache::flush();
 
-        $this->mount($user, $year);
+        $this->mount($year);
     }
 
     public function render()
@@ -91,8 +84,7 @@ class UserNotes extends Component
             ->get();
 
         return $expensesRaw->groupBy(function ($item) {
-            // Parse the 'date' attribute as a Carbon date object to extract the month and year.
-            $date = CarbonImmutable::createFromFormat('Y-m-d H:i:s', $item['spent_at']);
+            $date = CarbonImmutable::createFromFormat(self::DB_DATE_FORMAT, $item['spent_at']);
             // Group by month and year.
             return $date->format('Y-F');
         })->each(function ($month) {

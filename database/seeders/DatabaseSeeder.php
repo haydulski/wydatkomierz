@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Category;
@@ -16,9 +15,9 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'first_name' => 'Diana',
-            'last_name' => 'Siebiesiewicz',
-            'email' => 'diana.siebie@o2.pl',
+            'first_name' => 'John',
+            'last_name' => 'Doe',
+            'email' => 'john.doe@o2.pl',
             'password' => '1111',
         ]);
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire;
 
 use App\Models\Expense;
@@ -12,19 +14,19 @@ use Livewire\Component;
 
 class EditNote extends Component
 {
+    public Collection $categories;
     public Expense $note;
     #[Locked]
     public User $user;
-    public Collection $categories;
 
+    public float $amount;
     public string $title;
     public string $info;
-    public string $category_id;
-    public float $amount;
+    public int $category_id;
 
-    public function mount(Expense $expense, User $user)
+    public function mount(Expense $expense)
     {
-        $this->user = $user;
+        $this->user = auth()->user();
         $this->note = $expense;
         $this->categories = Category::all();
 
@@ -41,7 +43,7 @@ class EditNote extends Component
         );
         Cache::flush();
 
-        return $this->redirectRoute('user.notes', $this->user->id);
+        return $this->redirectRoute('user.notes');
     }
 
     public function render()

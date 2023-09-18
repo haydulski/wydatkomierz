@@ -7,21 +7,9 @@
         Wydatkomierz
     </h1>
     <x-heroicon-o-banknotes class="w-24 h-24 text-black mx-auto" />
-    <div id="choice-user" class="mt-16 px-[25%]">
-        <ul class="block xl:flex gap-4">
-            @foreach ($users as $user)
-                <li wire:key="{{ $user->id }}" wire:click="showUser({{ $user->id }})"
-                    class="text-center p-4 border-2 border-teal-600 hover:border-teal-300 rounded-full w-[150px]
-                     h-[150px] cursor-pointer group mb-4 xl:mb-0">
-                    <x-heroicon-o-finger-print class="w-8 h-8 text-teal-600 mx-auto" />
-                    <p class="text-black group-hover:text-teal-300 font-semibold text-basic xl:text-4xl">
-                        {{ $user->first_name }}</p>
-                </li>
-            @endforeach
-            {{-- <li
-                class="text-center p-4 border-2 border-teal-600 hover:border-teal-300 rounded-full w-[150px] h-[150px] cursor-pointer group flex align-center">
-                <x-heroicon-o-plus class="w-8 h-8 text-teal-600 m-auto group-hover:text-teal-300" />
-            </li> --}}
-        </ul>
+    <div id="user-panel" class="mt-16 px-[25%]">
+        <h3 class="font-semibold text-2xl">Cześć {{ $user->first_name }}!</h3>
+        <p class="text-basic">Twój email: {{ $user->email }}</p>
+        <a class="btn-standard mt-8 block" href="{{ route('user.notes') }}">Zobacz wydatki</a>
     </div>
 </div>
