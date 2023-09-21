@@ -11,6 +11,12 @@
                 @endforeach
             </select>
         </form>
+        <form class="new-note-form">
+            <select wire:model.live='fileType'>
+                <option default value='xml'>Format dokumentu: xml</option>
+                <option value="csv">Format dokumentu: csv</option>
+            </select>
+        </form>
         @if ($raportType === 1)
             <form class="raport-form mt-12" wire:submit="downloadAnnualRaport">
                 <label>Rok

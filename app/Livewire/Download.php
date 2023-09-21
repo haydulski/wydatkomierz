@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire;
 
-use App\Helpers\RaportBuilder;
+use App\Abstracts\DataBuilderFactoryAbstract;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\View\View;
@@ -14,19 +14,25 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class Download extends Component
 {
+    public string $annualRaportYear;
+    public string $fileType = 'xml';
+    public int $month = 1;
+    public array $months;
+    public int $raportType;
     #[Locked]
     public User $user;
     public string $year;
-    public int $month = 1;
-    public array $months;
-    public string $annualRaportYear;
-    public int $raportType;
-
     public array $raportTypes = [
         1 => 'Roczny',
         2 => 'Miesięczny',
         3 => 'Wszystkie lata'
     ];
+    private DataBuilderFactoryAbstract $factory;
+
+    public function boot(DataBuilderFactoryAbstract $factory)
+    {
+        $this->factory = $factory;
+    }
 
     public function mount(): void
     {
@@ -58,14 +64,15 @@ class Download extends Component
 
         if ($data->count() < 1) {
             session()->flash('status', 'Brak danych dla wybranego okresu!');
-            return $this->redirectRoute('user.download', ['user' => $this->user->id]);
+            return $this->redirectRoute('user.download');
         }
 
-        $builder = new RaportBuilder($data);
-        $filename = 'wydatki-raport_za_' . $date->format('Y') . '.xml';
+        $builder = $this->factory->create($this->fileType);
+        $builder->collectData($data->toArray());
+        $filename = 'wydatki-raport_za_' . $date->format('Y') . '.' . $builder->getFileFormat();
 
         return response()->streamDownload(function () use ($builder) {
-            echo $builder->getXml();
+            echo $builder->getParsedData();
         }, $filename);
     }
 
@@ -84,14 +91,15 @@ class Download extends Component
 
         if ($data->count() < 1) {
             session()->flash('status', 'Brak danych dla wybranego okresu!');
-            return $this->redirectRoute('user.download', ['user' => $this->user->id]);
+            return $this->redirectRoute('user.download');
         }
 
-        $builder = new RaportBuilder($data);
+        $builder = $this->factory->create('xml');
+        $builder->collectData($data->toArray());
         $filename = 'wydatki-raport_za_' . $date->format('Y-m') . '.xml';
 
         return response()->streamDownload(function () use ($builder) {
-            echo $builder->getXml();
+            echo $builder->getParsedData();
         }, $filename);
     }
 
@@ -102,11 +110,17 @@ class Download extends Component
             ->orderBy('spent_at')
             ->get();
 
-        $builder = new RaportBuilder($data);
+        if ($data->count() < 1) {
+            session()->flash('status', 'Brak danych dla wybranego okresu!');
+            return $this->redirectRoute('user.download');
+        }
+
+        $builder = $this->factory->create('xml');
+        $builder->collectData($data);
         $filename = 'wydatki-raport_wszystkie_lata.xml';
 
         return response()->streamDownload(function () use ($builder) {
-            echo $builder->getXml();
+            echo $builder->getParsedData();
         }, $filename);
     }
 }
