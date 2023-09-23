@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class Download extends Component
 {
+    private DataBuilderFactoryAbstract $factory;
     public string $annualRaportYear;
     public string $fileType = 'xml';
     public int $month = 1;
@@ -27,7 +28,6 @@ class Download extends Component
         2 => 'Miesięczny',
         3 => 'Wszystkie lata'
     ];
-    private DataBuilderFactoryAbstract $factory;
 
     public function boot(DataBuilderFactoryAbstract $factory)
     {

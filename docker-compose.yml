@@ -1,0 +1,49 @@
+version: '3.9'
+services:
+  # Laravel Application
+  app:
+    build:
+      dockerfile: Dockerfile
+    container_name: wydatkomierz-app
+    volumes:
+      - .:/var/www/html
+    working_dir: /var/www/html
+    networks:
+      - wydatkomierz-net
+    depends_on:
+      - database
+    environment:
+      - DB_CONNECTION=sqlite
+      - DB_DATABASE=/var/www/html/database/database.sqlite
+
+  # SQLite Database
+  database:
+    image: nouchka/sqlite3:latest
+    stdin_open: true
+    tty: true
+    container_name: wydatkomierz-sqlite
+    volumes:
+      - wydatkomierz-db:/var/www/html/database
+    networks:
+      - wydatkomierz-net
+
+  # Nginx web server
+  webserver:
+    image: nginx:latest
+    container_name: wydatkomierz-nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+      - ./docker/nginx:/etc/nginx/conf.d
+    depends_on:
+      - app
+    networks:
+      - wydatkomierz-net
+
+networks:
+  wydatkomierz-net:
+    driver: bridge
+volumes:
+  wydatkomierz-db:
+    driver: local

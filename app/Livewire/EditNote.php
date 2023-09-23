@@ -18,7 +18,6 @@ class EditNote extends Component
     public Expense $note;
     #[Locked]
     public User $user;
-
     public float $amount;
     public string $title;
     public string $info;

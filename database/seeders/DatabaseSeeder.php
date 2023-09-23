@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Category;
 use App\Models\Expense;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,8 +18,8 @@ class DatabaseSeeder extends Seeder
         User::create([
             'first_name' => 'John',
             'last_name' => 'Doe',
-            'email' => 'john.doe@o2.pl',
-            'password' => '1111',
+            'email' => 'john.doe@gmail.com',
+            'password' => Hash::make('1111'),
         ]);
 
         $categoryList = json_decode(file_get_contents(public_path('./categories.json')), true);
