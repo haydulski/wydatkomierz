@@ -2,7 +2,7 @@
 
 namespace App\Mail;
 
-use App\Helpers\RaportBuilder;
+use App\Helpers\DataBuilderFactory;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -66,8 +66,9 @@ class RaportBackup extends Mailable
             ->with('category:id,name')
             ->orderBy('spent_at')
             ->get();
-        $builder = new RaportBuilder($data);
+        $builder = DataBuilderFactory::create('xml');
+        $builder->collectData($data->toArray());
 
-        $this->xml = $builder->getXml();
+        $this->xml = $builder->getParsedData();
     }
 }
