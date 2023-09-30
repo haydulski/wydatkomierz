@@ -14,9 +14,9 @@
     background-color: rgba(245, 255, 252, 0.479);
 }
 
-.raport-form{
-    display:flex;
-    gap:1rem;
+.raport-form {
+    display: flex;
+    gap: 1rem;
 }
 
 .raport-form select {
@@ -25,8 +25,15 @@
     border-radius: 8px;
     padding: 8px;
     color: black;
-    flex:1;
+    flex: 1;
     background-color: rgba(245, 255, 252, 0.479);
+}
+
+@media(max-width:600px) {
+    .container {
+        padding-left: 6px;
+        padding-right: 6px;
+    }
 }
 
 @layer components {
@@ -39,16 +46,18 @@
     }
 
     .main-menu-item {
-        @apply text-sm xl:text-base py-1 px-2 mb-4 md:mb-0 rounded-md cursor-pointer  bg-teal-400 md:bg-transparent hover:bg-teal-400 hover:text-white uppercase;
+        @apply text-sm xl:text-base py-1 px-2 mb-4 md:mb-0 rounded-md cursor-pointer bg-teal-400 md:bg-transparent hover:bg-teal-400 hover:text-white uppercase;
     }
 
     h1 {
         @apply text-2xl xl:text-6xl py-8 font-semibold text-slate-800;
     }
 }
+
 .scrollable-container {
     width: 100%;
     min-width: 600px;
-    white-space: nowrap; /* Prevent content from wrapping */
+    white-space: nowrap;
+    /* Prevent content from wrapping */
     overflow-x: auto;
-  }
+}

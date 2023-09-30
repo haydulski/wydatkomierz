@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire;
 
-use App\Abstracts\DataBuilderFactoryAbstract;
+use App\Contracts\DataBuilderInterface;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\View\View;
@@ -14,22 +14,30 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class Download extends Component
 {
-    private DataBuilderFactoryAbstract $factory;
+    private DataBuilderInterface $factory;
+
     public string $annualRaportYear;
+
     public string $fileType = 'xml';
+
     public int $month = 1;
+
     public array $months;
+
     public int $raportType;
+
     #[Locked]
     public User $user;
+
     public string $year;
+
     public array $raportTypes = [
         1 => 'Roczny',
         2 => 'Miesięczny',
         3 => 'Wszystkie lata'
     ];
 
-    public function boot(DataBuilderFactoryAbstract $factory)
+    public function boot(DataBuilderInterface $factory)
     {
         $this->factory = $factory;
     }

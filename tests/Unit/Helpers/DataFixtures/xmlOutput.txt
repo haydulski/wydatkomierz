@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<body>
+  <expenses>
+    <expense id="1" user_id="1" category_id="1">
+      <title>Test 1</title>
+      <amount>12.05</amount>
+      <date>2023-09-22 18:58:23</date>
+      <description>additional information</description>
+      <category_name>Clothes</category_name>
+    </expense>
+    <expense id="2" user_id="1" category_id="2">
+      <title>Test 2</title>
+      <amount>10.05</amount>
+      <date>2023-09-23 18:58:23</date>
+      <description>additional information</description>
+      <category_name>Food</category_name>
+    </expense>
+  </expenses>
+  <total_amount>22.1</total_amount>
+</body>

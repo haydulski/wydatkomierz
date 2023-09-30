@@ -15,12 +15,18 @@ use Livewire\Component;
 class EditNote extends Component
 {
     public Collection $categories;
+
     public Expense $note;
+
     #[Locked]
     public User $user;
+
     public float $amount;
+
     public string $title;
+
     public string $info;
+
     public int $category_id;
 
     public function mount(Expense $expense)

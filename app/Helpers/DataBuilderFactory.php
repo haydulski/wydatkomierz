@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Helpers;
 
-use App\Abstracts\DataBuilderFactoryAbstract;
+use App\Contracts\DataBuilderInterface;
 use App\Abstracts\FileBuilderAbstract;
 use Exception;
 
-class DataBuilderFactory extends DataBuilderFactoryAbstract
+class DataBuilderFactory implements DataBuilderInterface
 {
     public static function create(string $type): FileBuilderAbstract
     {

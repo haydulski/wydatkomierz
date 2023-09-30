@@ -16,14 +16,22 @@ use Livewire\Attributes\Locked;
 class CreateNote extends Component
 {
     public Collection $categories;
+
     public string $title;
+
     public float $amount;
+
     public string $date;
+
     public string $info = '';
+
     public string $category_id = '1';
+
     public string $spent_at;
+
     #[Locked]
     public User $user;
+
     #[Locked]
     public int $user_id;
 

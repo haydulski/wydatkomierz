@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Abstracts\DataBuilderFactoryAbstract;
+use App\Contracts\DataBuilderInterface;
 use App\Helpers\DataBuilderFactory;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
@@ -14,7 +14,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(DataBuilderFactoryAbstract::class, function (Application $app) {
+        $this->app->bind(DataBuilderInterface::class, function () {
             return new DataBuilderFactory();
         });
     }

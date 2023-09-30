@@ -13,12 +13,17 @@ use Livewire\Component;
 class UserNotes extends Component
 {
     private const DB_DATE_FORMAT = 'Y-m-d H:i:s';
+
     private CarbonImmutable $dateFrom;
+
     private CarbonImmutable $dateTo;
 
     public User $user;
+
     public $expenses;
+
     public string $currentYear;
+
     public string $previousYear;
 
     public function mount(?string $year = null)

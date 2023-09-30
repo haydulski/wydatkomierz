@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Livewire;
 
 use App\Livewire\{CreateNote, Charts, Download, EditNote, Home, UserNotes};
@@ -65,5 +67,16 @@ class ViewsTest extends TestCase
             ->test(EditNote::class, ['expense' => $expense])
             ->assertSee('Zmień')
             ->assertSee($expense->title);
+    }
+
+    public function testEditNoteRedirect(): void
+    {
+        $expense = Expense::find(1);
+
+        Livewire::actingAs($this->user)
+            ->test(EditNote::class, ['expense' => $expense])
+            ->set('title', 'Using a redirect')
+            ->call('change')
+            ->assertRedirect(route('user.notes'));
     }
 }

@@ -16,11 +16,17 @@ class Charts extends Component
 {
     #[Locked]
     public User $user;
+
     public array $totalCurrentYearExpensesByMonthMonths;
+
     public array $totalCurrentYearExpensesByMonthAmounts;
+
     public array $yearExpensesByCategoryLabels;
+
     public array $yearExpensesByCategoryValues;
+
     public array $monthExpensesByCategoryLabels;
+
     public array $monthExpensesByCategoryValues;
 
 
