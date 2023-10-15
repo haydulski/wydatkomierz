@@ -69,7 +69,7 @@ return [
     |
     */
 
-    'timezone' => 'CET',
+    'timezone' => 'Europe/Warsaw',
 
     /*
     |--------------------------------------------------------------------------
@@ -212,7 +212,7 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 
-    'user' => env('APP_USER', 'pysio'),
+    'raport_author' => env('APP_RAPORT_AUTHOR'),
 
-    'password' => env('APP_PASSWORD', 'pysio'),
+    'raport_email' => env('APP_RAPORT_EMAIL'),
 ];

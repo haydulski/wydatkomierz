@@ -33,7 +33,7 @@ class RaportBackup extends Mailable
     {
         return new Envelope(
             subject: 'Raport Backup',
-            from: new Address('contact@prodeveloper.pl', 'Damian Hajdukiewicz')
+            from: new Address(config('app.raport_email'), config('app.raport_author'))
         );
     }
 
