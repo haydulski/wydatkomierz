@@ -35,7 +35,7 @@ class XmlFileBuilder extends FileBuilderAbstract
             $expense->addChild('title', $node['title']);
             $expense->addChild('amount', (string)  $node['amount']);
             $expense->addChild('date', (new DateTime($node['spent_at']))->format('Y-m-d H:i:s'));
-            $expense->addChild('description', $node['info']);
+            $expense->addChild('description', htmlspecialchars($node['info']));
             $expense->addChild('category_name', $node['category']['name']);
             $sum += (float) $node['amount'];
         }

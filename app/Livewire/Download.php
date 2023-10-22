@@ -102,9 +102,9 @@ class Download extends Component
             return $this->redirectRoute('user.download');
         }
 
-        $builder = $this->factory->create('xml');
+        $builder = $this->factory->create($this->fileType);
         $builder->collectData($data->toArray());
-        $filename = 'wydatki-raport_za_' . $date->format('Y-m') . '.xml';
+        $filename = 'wydatki-raport_za_' . $date->format('Y-m') . '.' . $builder->getFileFormat();
 
         return response()->streamDownload(function () use ($builder) {
             echo $builder->getParsedData();
@@ -123,9 +123,9 @@ class Download extends Component
             return $this->redirectRoute('user.download');
         }
 
-        $builder = $this->factory->create('xml');
+        $builder = $this->factory->create($this->fileType);
         $builder->collectData($data);
-        $filename = 'wydatki-raport_wszystkie_lata.xml';
+        $filename = 'wydatki-raport_wszystkie_lata' . '.' . $builder->getFileFormat();;
 
         return response()->streamDownload(function () use ($builder) {
             echo $builder->getParsedData();
