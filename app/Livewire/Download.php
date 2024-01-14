@@ -125,7 +125,7 @@ class Download extends Component
 
         $builder = $this->factory->create($this->fileType);
         $builder->collectData($data);
-        $filename = 'wydatki-raport_wszystkie_lata' . '.' . $builder->getFileFormat();;
+        $filename = 'wydatki-raport_wszystkie_lata' . '.' . $builder->getFileFormat();
 
         return response()->streamDownload(function () use ($builder) {
             echo $builder->getParsedData();
