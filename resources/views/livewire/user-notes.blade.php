@@ -12,22 +12,24 @@
                     <h3 class="font-semibold text-2xl">{{ $dateParts[0] . ' ' . translateMonthsToPolish($dateParts[1]) }}
                     </h3>
                 @else
-                    <h3 class="font-semibold text-2xl">{{ translateMonthsToPolish($month[0]->spent_at->format('F')) }}
+                    <h3 class="font-semibold text-2xl">
+                        {{ translateMonthsToPolish($month[0]['spent_at']) }}
                     </h3>
                 @endif
                 <ul class="border-t-2 border-t-slate-300 mt-4 pt-2 text-xs md:text-base min-w-[600px]">
                     <li>
                         <div class="flex gap-2 justify-between text-left child: ">
-                            <p class="table-header-active" wire:click="groupBy('title')">
+                            <p class="table-header-active" wire:click="groupBy('title', {{ $currentYear }})">
                                 nazwa
                             </p>
-                            <p class="table-header-active text-right pr-8" wire:click="groupBy('amount')">
+                            <p class="table-header-active text-right pr-8"
+                                wire:click="groupBy('amount', {{ $currentYear }})">
                                 cena
                             </p>
-                            <p class="table-header-active" wire:click="groupBy('spent_at')">
+                            <p class="table-header-active" wire:click="groupBy('spent_at', {{ $currentYear }})">
                                 data
                             </p>
-                            <p class="table-header-active" wire:click="groupBy('category_id')">
+                            <p class="table-header-active" wire:click="groupBy('category_id', {{ $currentYear }})">
                                 kategoria
                             </p>
                             <p class="table-header-active cursor-default hover:text-gray-400">zarządzaj</p>
@@ -35,22 +37,22 @@
                     </li>
                     @foreach ($month as $key => $note)
                         @if ($key !== 'sum')
-                            <li wire:key="{{ $note->id }}">
+                            <li wire:key="{{ $note['id'] }}">
                                 <div class="flex gap-2 justify-between py-2">
-                                    <p class="w-[20%]">{{ $note->title }}</p>
+                                    <p class="w-[20%]">{{ $note['title'] }}</p>
                                     <p class="w-[20%] text-right pr-8">
-                                        {{ number_format($note->amount, 2, ',', ' ') }} zł
+                                        {{ number_format($note['amount'], 2, ',', ' ') }} zł
                                     </p>
-                                    <p class="w-[20%]">{{ $note->spent_at->format('d.m.Y H:i') }}</p>
-                                    <p class="w-[20%]">{{ $note->category->name }}</p>
+                                    <p class="w-[20%]">{{ formatDate($note['spent_at']) }}</p>
+                                    <p class="w-[20%]">{{ $note['category']['name'] }}</p>
                                     <div class="w-[20%] block md:flex gap-2">
                                         <a class="px-2 py-2 xl:py-0 bg-green-600 hover:bg-green-700 rounded-md text-slate-100 block
                                         duration-200"
-                                            href="{{ route('user.notes.edit', [$note->id]) }}">Edytuj</a>
+                                            href="{{ route('user.notes.edit', [$note['id']]) }}">Edytuj</a>
                                         <p class="px-2 py-2 xl:py-0 bg-red-600 hover:bg-red-700 text-slate-100 rounded-md mt-2
                                          md:mt-0 cursor-pointer duration-200"
                                             wire:confirm="Na pewno chcesz usunąć?"
-                                            wire:click="delete({{ $note->id }},{{ $currentYear }})">
+                                            wire:click="delete({{ $note['id'] }},{{ $currentYear }})">
                                             Usuń
                                         </p>
                                     </div>

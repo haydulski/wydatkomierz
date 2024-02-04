@@ -41,7 +41,7 @@ class ViewsTest extends TestCase
     public function testChartsView(): void
     {
         Livewire::actingAs($this->user)
-            ->test(Charts::class)
+            ->test(Charts::class, ['yearString' => '2023'])
             ->assertSee('Wydatki miesięcznie');
     }
 

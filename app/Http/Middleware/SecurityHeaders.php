@@ -18,7 +18,7 @@ class SecurityHeaders
             $response->headers->set('Strict-Transport-Security', 'max-age=31536000');
             $response->headers->set(
                 'Content-Security-Policy',
-                "default-src 'self' 'unsafe-inline' 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval'"
+                "default-src 'self' 'unsafe-inline' 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net"
             );
             $response->headers->set('Expect-CT', 'enforce, max-age=30');
             $response->headers->set(

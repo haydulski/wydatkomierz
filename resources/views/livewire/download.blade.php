@@ -21,7 +21,8 @@
             <form class="raport-form mt-12" wire:submit="downloadAnnualRaport">
                 <label>Rok
                     <select wire:model="annualRaportYear">
-                        <option value="2023" selected>2023</option>
+                        <option value="2024" selected>2024</option>
+                        <option value="2023">2023</option>
                         <option value="2022">2022</option>
                     </select>
                 </label>
@@ -33,6 +34,7 @@
             <form class="raport-form mt-12" wire:submit="downloadMonthRaport">
                 <label>Rok
                     <select wire:model="year">
+                        <option value="2024">2024</option>
                         <option value="2023">2023</option>
                         <option value="2022">2022</option>
                     </select>

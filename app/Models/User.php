@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use DateTime;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -47,5 +48,45 @@ class User extends Authenticatable
     public function expenses(): HasMany
     {
         return $this->hasMany(Expense::class);
+    }
+
+    public function fees(): HasMany
+    {
+        return $this->hasMany(FixedFee::class);
+    }
+
+    public function scopeGetExpensesBetween(Builder $query, string $start, string $end): void
+    {
+        $query->with(['expenses' => function ($expenseQuery) use ($start, $end) {
+            $expenseQuery->with('category:name,id')
+                ->latest('spent_at')
+                ->whereBetween('spent_at', [$start, $end]);
+        }]);
+    }
+
+    public function scopeGetYearExpensesByMonths(Builder $query, string $year): void
+    {
+        $query->selectRaw('strftime("%m",spent_at) as month, sum(amount) as totalByMonth, spent_at')
+            ->join('expenses', 'expenses.user_id', '=', 'users.id')
+            ->where('spent_at', '>', $year)
+            ->groupBy('month');
+    }
+
+    public function scopeGetYearExpensesByCategory(Builder $query, string $year): void
+    {
+        $query->selectRaw('categories.id, categories.name, expenses.category_id, sum(expenses.amount) as totalByCategory')
+            ->join('expenses', 'expenses.user_id', '=', 'users.id')
+            ->join('categories', 'expenses.category_id', '=', 'categories.id')
+            ->where('spent_at', '>', $year)
+            ->groupBy('expenses.category_id');
+    }
+
+    public function scopeGetMonthExpensesByCategory(Builder $query, string $year): void
+    {
+        $query->selectRaw('categories.id, categories.name, expenses.category_id, sum(expenses.amount) as totalByCategory')
+            ->join('expenses', 'expenses.user_id', '=', 'users.id')
+            ->join('categories', 'expenses.category_id', '=', 'categories.id')
+            ->where('spent_at', '>', $year)
+            ->groupBy('expenses.category_id');
     }
 }

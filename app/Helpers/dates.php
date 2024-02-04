@@ -3,8 +3,9 @@
 declare(strict_types=1);
 
 if (!function_exists('translateMonthsToPolish')) {
-    function translateMonthsToPolish(string $monthName): string
+    function translateMonthsToPolish(string $date): string
     {
+        $monthName = (new DateTime($date))->format('F');
         switch (strtolower($monthName)) {
             case 'january':
                 return 'Styczeń';
@@ -54,5 +55,12 @@ if (!function_exists('decodeMonth')) {
             12 => 'Grudzień',
             default => 'Styczeń'
         };
+    }
+}
+
+if (!function_exists('formatDate')) {
+    function formatDate(string $date): string
+    {
+        return (new DateTime($date))->format('Y.m.d H:i');
     }
 }

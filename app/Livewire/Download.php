@@ -7,6 +7,7 @@ namespace App\Livewire;
 use App\Contracts\DataBuilderInterface;
 use App\Models\User;
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Illuminate\View\View;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
@@ -62,13 +63,12 @@ class Download extends Component
 
     public function downloadAnnualRaport(): ?StreamedResponse
     {
-        $date = Carbon::create($this->annualRaportYear)->startOfYear();
+        $date = CarbonImmutable::create($this->annualRaportYear);
 
-        $data = $this->user->expenses()
-            ->where('spent_at', '>', $date)
-            ->with('category:id,name')
-            ->orderBy('spent_at')
-            ->get();
+        $data = $this->user->getExpensesBetween(
+            $date->startOfYear(),
+            $date->endOfYear()
+        )->first()->expenses;
 
         if ($data->count() < 1) {
             session()->flash('status', 'Brak danych dla wybranego okresu!');
@@ -86,16 +86,11 @@ class Download extends Component
 
     public function downloadMonthRaport(): ?StreamedResponse
     {
-        $date = Carbon::createFromFormat('Y/m', "$this->annualRaportYear/$this->month");
-
-        $data = $this->user->expenses()
-            ->with('category:id,name')
-            ->whereBetween(
-                'spent_at',
-                [$date->startOfMonth()->format('Y-m-d H:i:s'), $date->endOfMonth()->format('Y-m-d H:i:s')]
-            )
-            ->orderBy('spent_at')
-            ->get();
+        $date = Carbon::createFromFormat('Y/m', "$this->year/$this->month");
+        $data = $this->user->getExpensesBetween(
+            $date->startOfMonth()->format('Y-m-d H:i:s'),
+            $date->endOfMonth()->format('Y-m-d H:i:s')
+        )->first()->expenses;
 
         if ($data->count() < 1) {
             session()->flash('status', 'Brak danych dla wybranego okresu!');

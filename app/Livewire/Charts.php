@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Livewire;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Cache;
@@ -16,6 +17,8 @@ class Charts extends Component
 {
     #[Locked]
     public User $user;
+
+    public Carbon $year;
 
     public array $totalCurrentYearExpensesByMonthMonths;
 
@@ -29,10 +32,16 @@ class Charts extends Component
 
     public array $monthExpensesByCategoryValues;
 
+    public array $yearsToDisplay = ['2022', '2023', '2024'];
 
-    public function mount(): void
+    public string $yearString;
+
+    public function mount(string $yearString): void
     {
         $this->user = auth()->user();
+        $this->yearString = $yearString;
+        $this->year = new Carbon("$yearString-01-01 00:00:00");
+
         $this->getTotalCurrentYearExpensesByMonth();
         $this->getYearExpensesByCategory();
         $this->getMonthExpensesByCategory();
@@ -55,37 +64,23 @@ class Charts extends Component
 
     private function totalCurrentYearExpenses(): Collection
     {
-        $now = CarbonImmutable::now();
-
         return Cache::remember(
-            'charts-total-amount-currentyear-monthly-' . $this->user->id,
+            'charts-total-amount-monthly-' . $this->user->id . '-' . $this->yearString,
             300,
-            function () use ($now) {
-                return $this->user->expenses()->where('spent_at', '>', $now->startOfYear())
-                    ->selectRaw('strftime("%m",spent_at) as month, sum(amount) as totalByMonth, spent_at')
-                    ->groupBy('month')
-                    ->get();
-            }
+            fn () => $this->user->getYearExpensesByMonths($this->year)->get()
         );
     }
 
     private function getYearExpensesByCategory(): void
     {
-        $now = CarbonImmutable::now();
         $data = Cache::remember(
-            'charts-total-amount-by-category-yearly-' . $this->user->id,
+            'charts-total-amount-by-category-yearly-' . $this->user->id . '-' . $this->yearString,
             300,
-            function () use ($now) {
-                return $this->user->expenses()->where('spent_at', '>', $now->startOfYear())
-                    ->with('category:id,name')
-                    ->selectRaw('category_id, sum(amount) as totalByCategory')
-                    ->groupBy('category_id')
-                    ->get();
-            }
+            fn () => $this->user->getYearExpensesByCategory($this->year)->get()
         );
 
         $data->each(function ($category) {
-            $this->yearExpensesByCategoryLabels[] = $category->category->name;
+            $this->yearExpensesByCategoryLabels[] = $category->name;
         });
 
         $data->each(function ($category) {
@@ -96,20 +91,16 @@ class Charts extends Component
     private function getMonthExpensesByCategory(): void
     {
         $now = CarbonImmutable::now();
+        $date = $now->startOfMonth()->setYear((int) $this->yearString);
+
         $data = Cache::remember(
-            'charts-total-amount-by-category-month-' . $this->user->id,
+            'charts-total-amount-by-category-month-' . $this->user->id . '-' . $this->yearString,
             300,
-            function () use ($now) {
-                return $this->user->expenses()->where('spent_at', '>', $now->startOfMonth())
-                    ->with('category:id,name')
-                    ->selectRaw('category_id, sum(amount) as totalByCategory')
-                    ->groupBy('category_id')
-                    ->get();
-            }
+            fn () => $this->user->getMonthExpensesByCategory($date)->get()
         );
 
         $data->each(function ($category) {
-            $this->monthExpensesByCategoryLabels[] = $category->category->name;
+            $this->monthExpensesByCategoryLabels[] = $category->name;
         });
 
         $data->each(function ($category) {

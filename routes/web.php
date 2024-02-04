@@ -1,10 +1,13 @@
 <?php
 
-use App\Livewire\Charts;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\Charts;
 use App\Livewire\CreateNote;
 use App\Livewire\Download;
 use App\Livewire\EditNote;
+use App\Livewire\FixedFees;
+use App\Livewire\FixedFeeAdd;
+use App\Livewire\FixedFeeEdit;
 use App\Livewire\Home;
 use App\Livewire\Login;
 use App\Livewire\UserNotes;
@@ -27,6 +30,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/lista', UserNotes::class)->name('user.notes');
     Route::get('/dodaj-wydatek', CreateNote::class)->name('user.notes.new');
     Route::get('/edytuj-wydatek/{expense}', EditNote::class)->name('user.notes.edit');
-    Route::get('/statystyki', Charts::class)->name('user.charts');
+    Route::get('/statystyki/{yearString}', Charts::class)->name('user.charts');
     Route::get('/raporty', Download::class)->name('user.download');
+    Route::get('/stale-wydatki', FixedFees::class)->name('user.fees');
+    Route::get('/stale-wydatki/nowy', FixedFeeAdd::class)->name('user.fees.add');
+    Route::get('/stale-wydatki/edycja/{fee}', FixedFeeEdit::class)->name('user.fees.edit');
 });

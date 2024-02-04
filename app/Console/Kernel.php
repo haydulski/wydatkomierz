@@ -13,6 +13,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('app:auto-raport-mail')->weekly();
+        $schedule->command('app:apply-fixed-fees')->everySixHours();
     }
 
     /**
