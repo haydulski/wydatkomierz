@@ -47,7 +47,11 @@ class UserNotes extends Component
         $this->currentYear = $this->dateTo->format('Y');
         $this->previousYear = $this->dateTo->subYear()->format('Y');
 
-        $this->rawExpenses = $this->getFormatedExpenses();
+        $this->rawExpenses = Cache::remember(
+            "$this->currentYear-expenses-" . $this->user->id,
+            self::CACHE_TTL,
+            fn () => $this->getFormatedExpenses()
+        );
         // we not allowed to load on livewire 3.4 front Collection object
         $this->expenses = $this->rawExpenses->toArray();
     }
@@ -85,10 +89,13 @@ class UserNotes extends Component
 
     private function getFormatedExpenses()
     {
-        $expensesRaw = $this->user->getExpensesBetween($this->dateFrom, $this->dateTo)
-            ->first()->expenses;
+        $expensesRaw = $this->user
+            ->where('id', $this->user->id)
+            ->with(['expenses' => function ($e) {
+                $e->getExpensesBetween($this->dateFrom, $this->dateTo);
+            }])->first()->expenses;
 
-        $sortedExpenses = $expensesRaw->groupBy(function ($item) {
+        return $expensesRaw->groupBy(function ($item) {
             $date = CarbonImmutable::createFromFormat(self::DB_DATE_FORMAT, $item['spent_at']);
             // Group by month and year.
             return $date->format('Y-F');
@@ -99,11 +106,5 @@ class UserNotes extends Component
 
             return $month['sum'] = $totalExpenses;
         });
-
-        return Cache::remember(
-            "$this->currentYear-expenses-" . $this->user->id,
-            self::CACHE_TTL,
-            fn () => $sortedExpenses
-        );
     }
 }

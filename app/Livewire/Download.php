@@ -65,10 +65,10 @@ class Download extends Component
     {
         $date = CarbonImmutable::create($this->annualRaportYear);
 
-        $data = $this->user->getExpensesBetween(
-            $date->startOfYear(),
-            $date->endOfYear()
-        )->first()->expenses;
+        $data = $this->user->where('id', $this->user->id)
+            ->with(['expenses' => function ($e) use ($date) {
+                $e->getExpensesBetween($date->startOfYear(), $date->endOfYear());
+            }])->first()->expenses;
 
         if ($data->count() < 1) {
             session()->flash('status', 'Brak danych dla wybranego okresu!');
@@ -87,10 +87,13 @@ class Download extends Component
     public function downloadMonthRaport(): ?StreamedResponse
     {
         $date = Carbon::createFromFormat('Y/m', "$this->year/$this->month");
-        $data = $this->user->getExpensesBetween(
-            $date->startOfMonth()->format('Y-m-d H:i:s'),
-            $date->endOfMonth()->format('Y-m-d H:i:s')
-        )->first()->expenses;
+        $data = $this->user->where('id', $this->user->id)
+            ->with(['expenses' => function ($e) use ($date) {
+                $e->getExpensesBetween(
+                    $date->startOfMonth()->format('Y-m-d H:i:s'),
+                    $date->endOfMonth()->format('Y-m-d H:i:s')
+                );
+            }])->first()->expenses;
 
         if ($data->count() < 1) {
             session()->flash('status', 'Brak danych dla wybranego okresu!');
