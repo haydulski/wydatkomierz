@@ -23,7 +23,7 @@ class CsvFileBuilder extends FileBuilderAbstract
     protected function parseData(): void
     {
         $rawCsv = [];
-        $rawCsv[] = ['id', 'user_id', 'category_id', 'category_name', 'title', 'amount', 'date'];
+        $rawCsv[] = ['id', 'user_id', 'category_id', 'category_name', 'title', 'amount', 'date', 'is_common'];
         foreach ($this->rawData as $node) {
             $rawCsv[] = [
                 $node['id'],
@@ -32,7 +32,8 @@ class CsvFileBuilder extends FileBuilderAbstract
                 $node['category']['name'],
                 $node['title'],
                 $node['amount'],
-                (new DateTime($node['spent_at']))->format('Y-m-d H:i:s')
+                (new DateTime($node['spent_at']))->format('Y-m-d H:i:s'),
+                $node['is_common'],
             ];
         }
 

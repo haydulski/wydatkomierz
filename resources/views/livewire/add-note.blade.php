@@ -9,13 +9,20 @@
         </label>
         <textarea cols="30" rows="4" wire:model="info">Opis</textarea>
         <div class="w-full lg:w-[33%]">
-            <input type="datetime-local" wire:model="date" max="{{ date('Y-m-d\TH:i:s', strtotime('now')) }}">
+            <input type="datetime-local" wire:model="date" max="{{ date('Y-m-d\TH:i', strtotime('now')) }}">
         </div>
         <select wire:model="category_id">
             @foreach ($categories as $cat)
                 <option id="{{ $cat->id }}" value="{{ $cat->id }}">{{ $cat->name }}</option>
             @endforeach
         </select>
+        <div class="w-full lg:w-[33%] flex pb-8">
+            <p class="flex-1 leading-10">
+                Wydatek wspólny
+            </p>
+            <input class="flex-1" type="checkbox" wire:model="is_common">
+
+        </div>
         <button type="submit" class="px-4 py-2 rounded-md bg-green-600 hover:bg-orange-600 duration-200">Dodaj</button>
     </form>
 </div>

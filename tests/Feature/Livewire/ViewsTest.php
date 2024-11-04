@@ -4,7 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Livewire;
 
-use App\Livewire\{CreateNote, Charts, Download, EditNote, Home, UserNotes};
+use App\Livewire\Charts;
+use App\Livewire\CreateNote;
+use App\Livewire\Download;
+use App\Livewire\EditNote;
+use App\Livewire\Home;
+use App\Livewire\UserNotes;
 use App\Models\Expense;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;

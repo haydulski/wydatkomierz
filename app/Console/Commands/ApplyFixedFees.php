@@ -5,10 +5,10 @@ namespace App\Console\Commands;
 use App\Enums\FixedFeesTypes;
 use App\Models\Expense;
 use App\Models\FixedFee;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
 use DateTime;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class ApplyFixedFees extends Command
 {
@@ -63,7 +63,7 @@ class ApplyFixedFees extends Command
         $date = new DateTime('now');
         $lastFeeUpdate = $fee->date_last_added;
 
-        if (!$lastFeeUpdate) {
+        if (! $lastFeeUpdate) {
             $this->createExpense($fee, $date);
         }
         $interval = (new DateTime($lastFeeUpdate))->diff($date);
@@ -83,7 +83,7 @@ class ApplyFixedFees extends Command
                     'spent_at' => $date->format('Y-m-d H:i:s'),
                     'category_id' => $fee->category_id,
                     'info' => 'Stały wydatek',
-                    'user_id' => $fee->user_id
+                    'user_id' => $fee->user_id,
                 ]
             );
 

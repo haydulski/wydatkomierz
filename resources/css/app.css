@@ -26,7 +26,7 @@
     padding: 8px;
     color: black;
     flex: 1;
-    background-color: rgba(245, 255, 252, 0.479);
+    background-color: rgba(235, 247, 243, 0.479);
 }
 
 @media(max-width:600px) {

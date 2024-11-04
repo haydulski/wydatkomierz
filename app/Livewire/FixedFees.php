@@ -24,6 +24,6 @@ class FixedFees extends Component
 
     public function render()
     {
-        return view('livewire.fixed-fees');
+        return view('livewire.fixed-fees')->layoutData(['title' => 'Stałe wydatki']);
     }
 }

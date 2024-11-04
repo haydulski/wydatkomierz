@@ -15,7 +15,7 @@ class FixedFee extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'type' => FixedFeesTypes::class
+        'type' => FixedFeesTypes::class,
     ];
 
     public function user(): HasOne

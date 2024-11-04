@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
-class UserNotes extends Component
+class CommonNotes extends Component
 {
     private const CACHE_TTL = 7200;
 
@@ -23,7 +23,11 @@ class UserNotes extends Component
 
     private Collection $rawExpenses;
 
+    private string $cacheKey;
+
     public User $user;
+
+    public array $additionalValues = ['sum', 'expensers'];
 
     public array $expenses;
 
@@ -45,11 +49,12 @@ class UserNotes extends Component
 
         $this->currentYear = $this->dateTo->format('Y');
         $this->previousYear = $this->dateTo->subYear()->format('Y');
+        $this->cacheKey = "$this->currentYear-common-expenses";
 
         $this->rawExpenses = Cache::remember(
-            "$this->currentYear-expenses-" . $this->user->id,
+            $this->cacheKey,
             self::CACHE_TTL,
-            fn () => $this->getFormatedExpenses()
+            fn() => $this->getFormatedExpenses()
         );
         // we not allowed to load on livewire 3.4 front Collection object
         $this->expenses = $this->rawExpenses->toArray();
@@ -72,27 +77,17 @@ class UserNotes extends Component
         $this->expenses = $sortedArray;
     }
 
-    public function delete(int $id, string $year)
-    {
-        $note = Expense::find($id);
-        $note->delete();
-        Cache::flush();
-
-        $this->mount($year);
-    }
-
     public function render()
     {
-        return view('livewire.user-notes')->layoutData(['title' => 'Wydatki- lista']);
+        return view('livewire.user-notes-common')->layoutData(['title' => 'Wspólne wydatki']);
     }
 
     private function getFormatedExpenses()
     {
-        $expensesRaw = $this->user
-            ->where('id', $this->user->id)
-            ->with(['expenses' => function ($e) {
-                $e->getExpensesBetween($this->dateFrom, $this->dateTo);
-            }])->first()->expenses;
+        $expensesRaw = Expense::with('user')
+            ->where('is_common', true)
+            ->getExpensesBetween($this->dateFrom, $this->dateTo)
+            ->get();
 
         return $expensesRaw->groupBy(function ($item) {
             $date = CarbonImmutable::createFromFormat(self::DB_DATE_FORMAT, $item['spent_at']);
@@ -102,8 +97,18 @@ class UserNotes extends Component
             $totalExpenses = array_reduce($month->toArray(), function ($carry, $item) {
                 return $carry + (float) $item['amount'];
             }, 0);
+            $month['expensers'] = $this->getExpenseSumByUser($month);
 
             return $month['sum'] = $totalExpenses;
         });
+    }
+
+    private function getExpenseSumByUser(Collection $month): array
+    {
+        $output = $month;
+
+        return $output->groupBy('user.first_name')
+            ->map(fn($expense) => $expense->sum('amount'))
+            ->toArray();
     }
 }

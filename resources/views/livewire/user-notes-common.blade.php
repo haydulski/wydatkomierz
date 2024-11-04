@@ -32,19 +32,15 @@
                             <p class="table-header-active" wire:click="groupBy('category_id', {{ $currentYear }})">
                                 kategoria
                             </p>
-                            <p class="table-header-active cursor-default hover:text-gray-400">zarządzaj</p>
+                            <p class="table-header-active cursor-default hover:text-gray-400">kto zapłacił</p>
                         </div>
                     </li>
                     @foreach ($month as $key => $note)
-                        @if ($key !== 'sum')
+                        @if (!in_array($key, $additionalValues))
                             <li wire:key="{{ $note['id'] }}">
                                 <div class="flex gap-2 justify-between py-2">
                                     <p class="w-[20%]">
                                         {{ $note['title'] }}
-                                        @if ($note['is_common'])
-                                            <span
-                                                class="text-slate-100 bg-orange-300 p-0.5 text-xs rounded-md">Wspólny</span>
-                                        @endif
                                     </p>
                                     <p class="w-[20%] text-right pr-8">
                                         {{ number_format($note['amount'], 2, ',', ' ') }} zł
@@ -52,15 +48,7 @@
                                     <p class="w-[20%]">{{ formatDate($note['spent_at']) }}</p>
                                     <p class="w-[20%]">{{ $note['category']['name'] }}</p>
                                     <div class="w-[20%] block md:flex gap-2">
-                                        <a class="px-2 py-2 xl:py-0 bg-green-600 hover:bg-green-700 rounded-md text-slate-100 block
-                                        duration-200"
-                                            href="{{ route('user.notes.edit', [$note['id']]) }}">Edytuj</a>
-                                        <p class="px-2 py-2 xl:py-0 bg-red-600 hover:bg-red-700 text-slate-100 rounded-md mt-2
-                                         md:mt-0 cursor-pointer duration-200"
-                                            wire:confirm="Na pewno chcesz usunąć?"
-                                            wire:click="delete({{ $note['id'] }},{{ $currentYear }})">
-                                            Usuń
-                                        </p>
+                                        {{ $note['user']['first_name'] }}
                                     </div>
                                 </div>
                             </li>
@@ -69,6 +57,11 @@
                 </ul>
                 <p class="border-t-2 border-slate-300 mt-2 font-semibold pb-4 xl:pb-0">Suma wydatków:
                     {{ number_format($month['sum'], 2, ',', ' ') }} zł</p>
+                @if (isset($month['expensers']))
+                    @foreach ($month['expensers'] as $key => $amount)
+                        <p>{{ $key }}: {{ $amount }} zł</p>
+                    @endforeach
+                @endif
             </div>
         </div>
     @endforeach

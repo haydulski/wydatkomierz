@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-if (!function_exists('translateMonthsToPolish')) {
+if (! function_exists('translateMonthsToPolish')) {
     function translateMonthsToPolish(string $date): string
     {
         $monthName = (new DateTime($date))->format('F');
@@ -37,7 +37,7 @@ if (!function_exists('translateMonthsToPolish')) {
     }
 }
 
-if (!function_exists('decodeMonth')) {
+if (! function_exists('decodeMonth')) {
     function decodeMonth(int $monthNumber): string
     {
         return match ($monthNumber) {
@@ -58,7 +58,7 @@ if (!function_exists('decodeMonth')) {
     }
 }
 
-if (!function_exists('formatDate')) {
+if (! function_exists('formatDate')) {
     function formatDate(string $date): string
     {
         return (new DateTime($date))->format('Y.m.d H:i');

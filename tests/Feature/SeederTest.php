@@ -34,7 +34,7 @@ class SeederTest extends TestCase
         $this->assertCount($categoriesCount * 10, $expenses);
     }
 
-    function testCategories(): void
+    public function testCategories(): void
     {
         $categoriesFromFile = json_decode(file_get_contents(public_path('categories.json')), true);
 

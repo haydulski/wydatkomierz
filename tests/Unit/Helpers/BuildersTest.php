@@ -24,13 +24,13 @@ class BuildersTest extends TestCase
     {
         return [
             ['csv'],
-            ['xml']
+            ['xml'],
         ];
     }
 
     private function getBuilderFixture(): array
     {
-        return  [
+        return [
             [
                 'id' => 1,
                 'user_id' => 1,
@@ -42,7 +42,7 @@ class BuildersTest extends TestCase
                 'category' => [
                     'name' => 'Clothes',
                     'category_id' => 1,
-                ]
+                ],
             ],
             [
                 'id' => 2,
@@ -55,8 +55,8 @@ class BuildersTest extends TestCase
                 'category' => [
                     'name' => 'Food',
                     'category_id' => 2,
-                ]
-            ]
+                ],
+            ],
         ];
     }
 }

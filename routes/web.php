@@ -1,16 +1,17 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Livewire\Charts;
+use App\Livewire\CommonNotes;
 use App\Livewire\CreateNote;
 use App\Livewire\Download;
 use App\Livewire\EditNote;
-use App\Livewire\FixedFees;
 use App\Livewire\FixedFeeAdd;
 use App\Livewire\FixedFeeEdit;
+use App\Livewire\FixedFees;
 use App\Livewire\Home;
 use App\Livewire\Login;
 use App\Livewire\UserNotes;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,4 +36,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/stale-wydatki', FixedFees::class)->name('user.fees');
     Route::get('/stale-wydatki/nowy', FixedFeeAdd::class)->name('user.fees.add');
     Route::get('/stale-wydatki/edycja/{fee}', FixedFeeEdit::class)->name('user.fees.edit');
+    Route::get('/wspolne-wydatki', CommonNotes::class)->name('user.notes.common');
 });

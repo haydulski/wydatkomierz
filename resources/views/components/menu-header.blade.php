@@ -9,6 +9,9 @@
         <li class="main-menu-item hover:bg-orange-400">
             <a href="{{ route('user.fees') }}" wire:navigate>Stałe wydatki</a>
         </li>
+        <li class="main-menu-item hover:bg-orange-400">
+            <a href="{{ route('user.notes.common') }}" wire:navigate>Wspólne wydatki</a>
+        </li>
         <li class="main-menu-item">
             <a href="{{ route('user.charts', ['yearString' => date('Y')]) }}">Statystyki</a>
         </li>

@@ -31,12 +31,13 @@ class XmlFileBuilder extends FileBuilderAbstract
             $expense = $expenses->addChild('expense');
             $expense->addAttribute('id', (string) $node['id']);
             $expense->addAttribute('user_id', (string) $node['user_id']);
-            $expense->addAttribute('category_id', (string)  $node['category_id']);
+            $expense->addAttribute('category_id', (string) $node['category_id']);
             $expense->addChild('title', $node['title']);
-            $expense->addChild('amount', (string)  $node['amount']);
+            $expense->addChild('amount', (string) $node['amount']);
             $expense->addChild('date', (new DateTime($node['spent_at']))->format('Y-m-d H:i:s'));
             $expense->addChild('description', htmlspecialchars($node['info']));
             $expense->addChild('category_name', $node['category']['name']);
+            $expense->addChild('is_common', (string) $node['is_common']);
             $sum += (float) $node['amount'];
         }
         $xml->addChild('total_amount', (string) $sum);

@@ -6,8 +6,8 @@ namespace App\Livewire;
 
 use App\Enums\FixedFeesTypes;
 use App\Models\Category;
-use App\Models\User;
 use App\Models\FixedFee;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
@@ -32,7 +32,6 @@ class FixedFeeEdit extends Component
     public array $types;
 
     public int $type;
-
 
     public function mount(FixedFee $fee)
     {

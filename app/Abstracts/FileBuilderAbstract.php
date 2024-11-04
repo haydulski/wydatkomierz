@@ -7,6 +7,7 @@ namespace App\Abstracts;
 abstract class FileBuilderAbstract
 {
     protected string $parsedData;
+
     protected array $rawData;
 
     abstract public function collectData(array $data): void;

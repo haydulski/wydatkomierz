@@ -21,7 +21,7 @@ class ExpenseFactory extends Factory
             'amount' => fake()->randomFloat(2, 1, 10000),
             'spent_at' => fake()->dateTimeBetween('-2 years', 'now'),
             'info' => fake()->sentence(6),
-            'user_id' => 1
+            'user_id' => 1,
         ];
     }
 }

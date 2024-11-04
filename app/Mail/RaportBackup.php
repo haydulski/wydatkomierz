@@ -57,7 +57,7 @@ class RaportBackup extends Mailable
     {
         return [
             Attachment::fromData(fn () => $this->xml, 'wydatki-wszystkie-lata.xml')
-                ->withMime('text/xml')
+                ->withMime('text/xml'),
         ];
     }
 

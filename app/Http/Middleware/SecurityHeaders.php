@@ -12,7 +12,7 @@ class SecurityHeaders
     {
         $response = $next($request);
 
-        if (!app()->environment('testing')) {
+        if (! app()->environment('testing')) {
             $response->headers->set('Referrer-Policy', 'no-referrer-when-downgrade');
             $response->headers->set('X-XSS-Protection', '1; mode=block');
             $response->headers->set('Strict-Transport-Security', 'max-age=31536000');

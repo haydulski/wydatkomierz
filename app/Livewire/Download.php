@@ -35,7 +35,7 @@ class Download extends Component
     public array $raportTypes = [
         1 => 'Roczny',
         2 => 'Miesięczny',
-        3 => 'Wszystkie lata'
+        3 => 'Wszystkie lata',
     ];
 
     public function boot(DataBuilderInterface $factory)
@@ -53,7 +53,7 @@ class Download extends Component
 
     public function render(): View
     {
-        return view('livewire.download');
+        return view('livewire.download')->layoutData(['title' => 'Pobierz dane']);
     }
 
     public function chooseRaport(int $id): void
@@ -72,6 +72,7 @@ class Download extends Component
 
         if ($data->count() < 1) {
             session()->flash('status', 'Brak danych dla wybranego okresu!');
+
             return $this->redirectRoute('user.download');
         }
 
@@ -97,6 +98,7 @@ class Download extends Component
 
         if ($data->count() < 1) {
             session()->flash('status', 'Brak danych dla wybranego okresu!');
+
             return $this->redirectRoute('user.download');
         }
 
@@ -118,6 +120,7 @@ class Download extends Component
 
         if ($data->count() < 1) {
             session()->flash('status', 'Brak danych dla wybranego okresu!');
+
             return $this->redirectRoute('user.download');
         }
 

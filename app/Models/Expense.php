@@ -21,7 +21,8 @@ class Expense extends Model
         'spent_at',
         'category_id',
         'info',
-        'user_id'
+        'user_id',
+        'is_common',
     ];
 
     public function category(): BelongsTo

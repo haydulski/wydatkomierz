@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Livewire;
 
-use Livewire\Component;
 use App\Models\User;
 use Illuminate\View\View;
+use Livewire\Component;
 
 class Home extends Component
 {
@@ -26,6 +26,6 @@ class Home extends Component
 
     public function render(): View
     {
-        return view('livewire.home');
+        return view('livewire.home')->layoutData(['title' => 'Wydatkomierz']);
     }
 }

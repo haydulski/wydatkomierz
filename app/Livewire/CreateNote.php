@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Livewire;
 
-use DateTime;
-use Livewire\Component;
 use App\Models\Category;
 use App\Models\User;
+use DateTime;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 use Livewire\Attributes\Locked;
+use Livewire\Component;
 
 class CreateNote extends Component
 {
@@ -28,6 +28,8 @@ class CreateNote extends Component
     public string $category_id = '1';
 
     public string $spent_at;
+
+    public bool $is_common = false;
 
     #[Locked]
     public User $user;
@@ -46,7 +48,7 @@ class CreateNote extends Component
     {
         $this->spent_at = (new DateTime($this->date))->format('Y-m-d H:i:s');
         $this->user->expenses()->create(
-            $this->only(['title', 'spent_at', 'amount', 'info', 'category_id'])
+            $this->only(['title', 'spent_at', 'amount', 'info', 'category_id', 'is_common'])
         );
         Cache::flush();
 
@@ -55,6 +57,8 @@ class CreateNote extends Component
 
     public function render(): View
     {
-        return view('livewire.add-note');
+        $this->date = date('Y-m-d\TH:i', strtotime('now'));
+
+        return view('livewire.add-note')->layoutData(['title' => 'Dodaj wydatek']);
     }
 }
