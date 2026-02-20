@@ -28,6 +28,10 @@ class AutoRaportMail extends Command
      */
     public function handle()
     {
+        if (now()->day !== 1) {
+            return;
+        }
+
         $users = User::all();
         $users->each(function ($user) {
             if ($user->expenses()->count() > 0) {
