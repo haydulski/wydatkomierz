@@ -16,12 +16,20 @@
 
 .raport-form {
     display: flex;
-    gap: 1rem;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+@media (min-width: 640px) {
+    .raport-form {
+        flex-direction: row;
+        gap: 1rem;
+    }
 }
 
 .raport-form select {
     display: block;
-    margin: 1rem 0;
+    margin: 0.5rem 0;
     border-radius: 8px;
     padding: 8px;
     color: black;
@@ -29,10 +37,11 @@
     background-color: rgba(235, 247, 243, 0.479);
 }
 
-@media(max-width:600px) {
-    .container {
-        padding-left: 6px;
-        padding-right: 6px;
+@media (max-width: 600px) {
+    .new-note-form input,
+    .new-note-form textarea,
+    .new-note-form select {
+        font-size: 16px;
     }
 }
 
@@ -46,11 +55,11 @@
     }
 
     .main-menu-item {
-        @apply text-sm xl:text-base py-1 px-2 mb-4 md:mb-0 rounded-md cursor-pointer bg-teal-400 md:bg-transparent hover:bg-teal-400 hover:text-white uppercase;
+        @apply text-xs sm:text-sm xl:text-base py-1.5 px-2 rounded-md cursor-pointer bg-teal-400 md:bg-transparent hover:bg-teal-400 hover:text-white uppercase text-center md:text-left;
     }
 
     h1 {
-        @apply text-2xl xl:text-6xl py-8 font-semibold text-slate-800;
+        @apply text-2xl md:text-4xl xl:text-6xl py-4 md:py-8 font-semibold text-slate-800;
     }
 }
 

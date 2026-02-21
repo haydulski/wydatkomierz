@@ -14,7 +14,8 @@
         "laravel/framework": "^10.0",
         "laravel/tinker": "^2.8",
         "league/flysystem": "^3.15",
-        "livewire/livewire": "^3.4"
+        "livewire/livewire": "^3.4",
+        "nativephp/mobile": "^3.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.13",

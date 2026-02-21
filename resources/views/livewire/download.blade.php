@@ -1,7 +1,7 @@
-<div class="py-8">
-    <h1 class="text-6xl py-8 font-semibold text-slate-800">Pobierz raport</h1>
+<div class="py-4 md:py-8">
+    <h1 class="font-semibold text-slate-800">Pobierz raport</h1>
     <x-menu-header userId="{{ $user->id }}" />
-    <div class="mt-12" wire:loading.class.add="opacity-25">
+    <div class="mt-6 md:mt-12 max-w-2xl" wire:loading.class.add="opacity-25">
         <form class="new-note-form">
             <select wire:model.live='raportType'>
                 <option default>Wybierz typ</option>
@@ -18,7 +18,7 @@
             </select>
         </form>
         @if ($raportType === 1)
-            <form class="raport-form mt-12" wire:submit="downloadAnnualRaport">
+            <form class="raport-form mt-8 md:mt-12" wire:submit="downloadAnnualRaport">
                 <label>Rok
                     <select wire:model="annualRaportYear">
                         <option value="2024" selected>2024</option>
@@ -27,11 +27,11 @@
                     </select>
                 </label>
                 <input type="submit" value="Pobierz"
-                    class="py-2 px-4 w-[100px] mb-[1rem] bg-slate-400 max-h-[3rem] mt-auto rounded-md hover:bg-green-600 cursor-pointer">
+                    class="py-2 px-4 w-full sm:w-[100px] mb-[1rem] bg-slate-400 max-h-[3rem] mt-auto rounded-md hover:bg-green-600 cursor-pointer">
             </form>
         @endif
         @if ($raportType === 2)
-            <form class="raport-form mt-12" wire:submit="downloadMonthRaport">
+            <form class="raport-form mt-8 md:mt-12" wire:submit="downloadMonthRaport">
                 <label>Rok
                     <select wire:model="year">
                         <option value="2024">2024</option>
@@ -47,13 +47,13 @@
                     </select>
                 </label>
                 <input type="submit" value="Pobierz"
-                    class="py-2 px-4 w-[100px] mb-[1rem] bg-slate-400 max-h-[3rem] mt-auto rounded-md hover:bg-green-600 cursor-pointer">
+                    class="py-2 px-4 w-full sm:w-[100px] mb-[1rem] bg-slate-400 max-h-[3rem] mt-auto rounded-md hover:bg-green-600 cursor-pointer">
             </form>
         @endif
         @if ($raportType === 3)
-            <form class="raport-form mt-12" wire:submit="downloadAllYearsRaport">
+            <form class="raport-form mt-8 md:mt-12" wire:submit="downloadAllYearsRaport">
                 <input type="submit" value="Pobierz raport za wszystkie lata"
-                    class="py-2 px-4 mb-[1rem] bg-slate-400 max-h-[3rem] mt-auto rounded-md hover:bg-green-600 cursor-pointer">
+                    class="py-2 px-4 w-full sm:w-auto mb-[1rem] bg-slate-400 max-h-[3rem] mt-auto rounded-md hover:bg-green-600 cursor-pointer">
             </form>
         @endif
     </div>

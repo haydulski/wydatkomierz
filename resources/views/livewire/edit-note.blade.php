@@ -1,8 +1,8 @@
-<div class="py-8">
-    <h1 class="font-bold py-8 text-4xl">Edytuj wydatek "{{ $note->title }}"</h1>
+<div class="py-4 md:py-8">
+    <h1 class="font-bold">Edytuj wydatek "{{ $note->title }}"</h1>
     <x-menu-header userId="{{ $user->id }}" />
-    <div class="my-12 block"></div>
-    <form wire:submit="change" class="p-4 border-2 border-gray-400 rounded-md new-note-form">
+    <div class="my-6 md:my-12 block"></div>
+    <form wire:submit="change" class="p-4 border-2 border-gray-400 rounded-md new-note-form max-w-2xl">
         <label>Tytuł
             <input type="text" name="title" placeholder="{{ $note->title }}" wire:model="title"></label>
         <label>Cena
@@ -17,15 +17,16 @@
                     <option id="{{ $cat->id }}" value="{{ $cat->id }}">{{ $cat->name }}</option>
                 @endforeach
             </select></label>
-        <div class="w-full lg:w-[33%] flex">
-            <p class="flex-1 leading-10">
+        <div class="w-full sm:w-[50%] lg:w-[33%] flex items-center gap-3">
+            <p class="leading-10">
                 Wydatek wspólny
             </p>
-            <input class="flex-1" type="checkbox" wire:model="is_common">
-
+            <input type="checkbox" wire:model="is_common" class="!w-auto">
         </div>
-        <button type="submit" class="px-4 py-2 rounded-md bg-green-600 hover:bg-orange-600 duration-200">Zmień</button>
-        <a
-            href="{{ route('user.notes', $user->id) }}"class="px-4 py-2 rounded-md bg-green-600 hover:bg-orange-600 duration-200 cursor-pointer">Anuluj</a>
+        <div class="flex flex-col sm:flex-row gap-2 mt-4">
+            <button type="submit" class="px-4 py-2 rounded-md bg-green-600 hover:bg-orange-600 duration-200 w-full sm:w-auto">Zmień</button>
+            <a href="{{ route('user.notes', $user->id) }}"
+                class="px-4 py-2 rounded-md bg-green-600 hover:bg-orange-600 duration-200 cursor-pointer text-center w-full sm:w-auto">Anuluj</a>
+        </div>
     </form>
 </div>

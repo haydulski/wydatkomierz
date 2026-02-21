@@ -1,7 +1,7 @@
-<div class="py-8">
-    <h1 class="text-6xl font-semibold py-8">Statystyki</h1>
+<div class="py-4 md:py-8">
+    <h1 class="font-semibold">Statystyki</h1>
     <x-menu-header userId="{{ $user->id }}" />
-    <div class="mx-auto flex mt-12 gap-4 px-2">
+    <div class="mx-auto flex flex-wrap mt-6 md:mt-12 gap-2 md:gap-4 px-2">
         @foreach ($yearsToDisplay as $year)
             <a class="btn-standard {{ $yearString === $year ? 'bg-green-600' : null }}"
                 href="{{ route('user.charts', ['yearString' => $year]) }}">
@@ -9,18 +9,18 @@
             </a>
         @endforeach
     </div>
-    <div class="mx-auto flex flex-col items-center mt-12">
-        <h2 class="text-2xl font-semibold">Wydatki miesięcznie w {{ $yearString }} roku</h2>
-        <canvas id="myChart" class="max-h-[50vw] max-w-[70vw]"></canvas>
+    <div class="mx-auto flex flex-col items-center mt-8 md:mt-12">
+        <h2 class="text-lg md:text-2xl font-semibold text-center">Wydatki miesięcznie w {{ $yearString }} roku</h2>
+        <canvas id="myChart" class="max-h-[70vw] md:max-h-[50vw] max-w-full md:max-w-[70vw]"></canvas>
     </div>
-    <div class="mx-auto flex flex-col items-center mt-48">
-        <h2 class="text-2xl font-semibold">Wydatki rocznie w podziale na kategorie</h2>
-        <canvas id="yearly-categories" class="max-h-[50vw] max-w-[70vw]"></canvas>
+    <div class="mx-auto flex flex-col items-center mt-16 md:mt-48">
+        <h2 class="text-lg md:text-2xl font-semibold text-center">Wydatki rocznie w podziale na kategorie</h2>
+        <canvas id="yearly-categories" class="max-h-[70vw] md:max-h-[50vw] max-w-full md:max-w-[70vw]"></canvas>
     </div>
     @if (!empty($monthExpensesByCategoryLabels))
-        <div class="mx-auto flex flex-col items-center mt-48">
-            <h2 class="text-2xl font-semibold">Wydatki w tym miesiącu w podziale na kategorie</h2>
-            <canvas id="month-categories" class="max-h-[50vw] max-w-[70vw]"></canvas>
+        <div class="mx-auto flex flex-col items-center mt-16 md:mt-48">
+            <h2 class="text-lg md:text-2xl font-semibold text-center">Wydatki w tym miesiącu w podziale na kategorie</h2>
+            <canvas id="month-categories" class="max-h-[70vw] md:max-h-[50vw] max-w-full md:max-w-[70vw]"></canvas>
         </div>
     @endif
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

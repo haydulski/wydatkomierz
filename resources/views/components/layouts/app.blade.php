@@ -18,19 +18,19 @@
 <body class="antialiased">
     @if (session('error'))
         <div
-            class="alert alert-error text-red-800 mt-14 font-semibold text-center absolute top-4 right-16
-        p-4 bg-white rounded-md shadow-md">
+            class="alert alert-error text-red-800 mt-14 font-semibold text-center absolute top-4 right-4 md:right-16
+        p-4 bg-white rounded-md shadow-md max-w-[calc(100%-2rem)] md:max-w-md z-50">
             {{ session('error') }}
         </div>
     @endif
     @if (session('status'))
         <div
-            class="alert alert-error text-blue-800 mt-14 font-semibold text-center absolute top-4 right-16
-        p-4 bg-white rounded-md shadow-md">
+            class="alert alert-error text-blue-800 mt-14 font-semibold text-center absolute top-4 right-4 md:right-16
+        p-4 bg-white rounded-md shadow-md max-w-[calc(100%-2rem)] md:max-w-md z-50">
             {{ session('status') }}
         </div>
     @endif
-    <div class="container mx-auto">
+    <div class="container mx-auto px-3 sm:px-4 md:px-6">
         {{ $slot }}
     </div>
     <script>
